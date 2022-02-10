@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Country</title>
+    <link rel="stylesheet" href="./wwwroot/css/style.css" />
+  </head>
+  <body>
+    <section class="slideshow">
+      <ul class="navigation" id="ulNavigation"></ul>
+      <div class="detail" id="divDetail">
+        <div class="detail-item active">
+          <div class="headline">TOKYO</div>
+          <div
+            class="background"
+            style="
+              background-image: url(./wwwroot/img/tokyo.jpg);
+              height: 100vh;
+            "
+          ></div>
+          <div
+            class="background centerBackground"
+            style="background-image: url(./wwwroot/img/tokyo.jpg)"
+          ></div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+      var ulNavigation = document.getElementById("ulNavigation");
+      var elementUl = "";
+      var divDetail = document.getElementById("divDetail");
+      var detailElements = "";
+      var c = 0;
+
+      var datos = [
+        { url: "./wwwroot/img/tokyo.jpg", active: "active", name: "TOKYO" },
+        { url: "./wwwroot/img/kyoto.jpg", active: "", name: "KYOTO" },
+        { url: "./wwwroot/img/osaka.jpg", active: "", name: "OSAKA" },
+        { url: "./wwwroot/img/hokkaido.jpg", active: "", name: "HOKKAIDO" },
+        { url: "./wwwroot/img/fukuoka.jpg", active: "", name: "FUKUOKA" },
+      ];
+
+      datos.forEach(function (element) {
+        elementUl +=
+          '<li class="navigation-item ' +
+          element["active"] +
+          '">' +
+          '<span class="rotate-holder"></span>' +
+          '<span class="background-holder" style="background-image: url(' +
+          element["url"] +
+          ')"></span></li>';
+
+        if (c >= 1) {
+          detailElements +=
+            '<div class="detail-item">' +
+            '<div class="headline">' +
+            element["name"] +
+            "</div>" +
+            '<div class="background" style="background-image: url(' +
+            element["url"] +
+            ')"></div></div>';
+        }
+        c += 1;
+      });
+      ulNavigation.innerHTML += elementUl;
+      divDetail.innerHTML += detailElements;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/TextPlugin.min.js"></script>
+    <script src="./wwwroot/js/demo.js"></script>
+  </body>
+</html>

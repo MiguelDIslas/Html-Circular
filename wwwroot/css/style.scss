@@ -1,0 +1,179 @@
+@mixin ZeroPaddingMargin {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin PositionBlock($relative) {
+  @if ($relative) {
+    position: relative;
+  } @else {
+    position: absolute;
+  }
+  display: block;
+}
+
+@mixin OpacityVisible($opacity, $visible){
+  opacity: $opacity;
+  visibility: if($visible==1,visible, hidden);
+}
+
+@mixin BackgroundProperties(){
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+@mixin WidthHeightValues($widthValue, $heightValue: "") {
+  @if $heightValue == "" {
+    width: $widthValue;
+    height: $widthValue;
+  } @else {
+    width: $widthValue;
+    height: $heightValue;
+  }
+}
+
+@mixin TRBL($top: "", $right: "", $bottom: "", $left: "") {
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+body {
+  @include ZeroPaddingMargin;
+  color: white;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  font-family: "Oswald", sans-serif;
+}
+
+//Slide with navigation bar
+.slideshow {
+  @include WidthHeightValues(100%, 100vh);
+  @include PositionBlock(true);
+  margin: 0 auto;
+  visibility: hidden;
+  overflow: hidden;
+
+  & .navigation {
+    @include ZeroPaddingMargin;
+    @include WidthHeightValues(640px);
+    @include TRBL($top: 50%, $left: -230px);
+    @include PositionBlock(false);
+    margin-top: -320px;
+    z-index: 10;
+  }
+
+  & .navigation .navigation-item {
+    @include WidthHeightValues(120px);
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: border 0.6s ease-in-out;
+  }
+
+  & .navigation .navigation-item .rotate-holder {
+    @include WidthHeightValues(0);
+    @include TRBL($top: -9999px, $left: -9999px);
+    position: fixed;
+    display: block;
+  }
+
+  & .navigation .navigation-item .background-holder {
+    @include TRBL(0, 0, 0, 0);
+    @include WidthHeightValues(100%);
+    @include PositionBlock(false);
+    @include BackgroundProperties;
+    @include OpacityVisible(1, 1);
+    border-radius: 50%;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+  }
+
+  & .navigation .navigation-item:hover .background-holder {
+    opacity: 0.75;
+  }
+
+  & .navigation .navigation-item.active .background-holder {
+    @include OpacityVisible(0, 0);
+  }
+}
+
+//Slide with details bar
+.slideshow {
+
+  & .detail {
+    @include WidthHeightValues(100%);
+    @include TRBL(0, 0, 0, 0);
+    @include PositionBlock(false);
+    z-index: 8;
+  }
+
+  & .detail .detail-item {
+    @include TRBL(0, 0, 0, 0);
+    @include WidthHeightValues(100%);
+    @include PositionBlock(false);
+    @include OpacityVisible(0, 0);
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
+  
+  & .detail .detail-item .headline {
+    @include PositionBlock(false);
+    @include TRBL($top: 50%, $left: 50%);
+    @include WidthHeightValues(100%, 126px);
+    max-width: calc(100% - 480px);
+    transform: translate(-50%, -50%);
+    overflow: visible;
+    white-space: nowrap;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  & .detail .detail-item .headline .letter {
+    @include OpacityVisible(0, 0);
+    position: relative;
+    display: inline-block;
+    color: white;
+    font-size: 132px;
+    line-height: 110px;
+    font-weight: 900;
+    font-kerning: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    text-transform: uppercase;
+  }
+
+  & .detail .detail-item .background {
+    @include TRBL(0, 0, 0, 0);
+    @include PositionBlock(false);
+    @include WidthHeightValues(calc(100% + 100px));
+    @include BackgroundProperties;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  & .detail .detail-item .background::before {
+    @include WidthHeightValues(100%);
+    @include PositionBlock(false);
+    @include TRBL(0, 0, 0, 0);
+    content: "";
+    background: linear-gradient(to right, black 0%, rgba(0, 0, 0, 0) 90%);
+    z-index: 2;
+  }
+
+  & .detail .detail-item.active {
+    @include OpacityVisible(1, 1);
+  }
+}
+
+.centerBackground{
+  height: 100vh;
+  background-size: cover;
+  background-position: center
+}
